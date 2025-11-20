@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TikTok OAuth Callback</title>
+</head>
+<body>
+  <h2>Processing TikTok login...</h2>
+  <script>
+    // 获取code和state
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const state = params.get("state");
+
+    // 显示一下（调试用）
+    console.log("TikTok code:", code);
+    console.log("state:", state);
+
+    // TODO: 你可以在这里调用后端交换access_token
+  </script>
+</body>
+</html>
