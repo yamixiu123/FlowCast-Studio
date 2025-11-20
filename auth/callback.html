@@ -1,21 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>TikTok OAuth Callback</title>
+    <meta charset="UTF-8">
+    <title>TikTok Auth Callback</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .code-box {
+            background: #eee;
+            padding: 10px;
+            display: inline-block;
+            margin: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
+
 <body>
-  <h2>Processing TikTok login...</h2>
-  <script>
-    // 获取code和state
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const state = params.get("state");
+    <h2>Login Processing...</h2>
+    <p>Please wait while we connect to the server.</p>
 
-    // 显示一下（调试用）
-    console.log("TikTok code:", code);
-    console.log("state:", state);
+    <div id="debug-info">
+        <p>Auth Code: <span id="code" class="code-box">...</span></p>
+    </div>
 
-    // TODO: 你可以在这里调用后端交换access_token
-  </script>
+    <script>
+        // REPLACE WITH YOUR NGROK/BACKEND URL
+        const BACKEND_URL = 'http://localhost:5000';
+
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+        const state = params.get("state");
+        const error = params.get("error");
+
+        if (code) {
+            document.getElementById("code").innerText = code;
+
+            // Send code to backend to exchange for token
+            fetch(`${BACKEND_URL}/api/exchange_token`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code: code })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Save user info to local storage for the main page
+                        localStorage.setItem('tiktok_user', JSON.stringify(data.user));
+
+                        // Redirect back to main page
+                        setTimeout(() => {
+                            window.location.href = "../index.html";
+                        }, 1500);
+                    } else {
+                        document.body.innerHTML += `<p style="color:red">Error exchanging token: ${JSON.stringify(data)}</p>`;
+                    }
+                })
+                .catch(err => {
+                    document.body.innerHTML += `<p style="color:red">Backend Connection Error: ${err.message}</p>`;
+                });
+
+        } else if (error) {
+            document.body.innerHTML += `<p style="color:red">TikTok Error: ${error}</p>`;
+        }
+    </script>
 </body>
+
 </html>
