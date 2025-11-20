@@ -3,106 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Video Scheduler - Dashboard</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; background-color: #f4f4f4; }
-        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        
-  
-        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; transition: 0.3s; font-weight: bold; }
-        .btn-tiktok { background-color: #000000; color: white; display: flex; align-items: center; gap: 10px; }
-        .btn-upload { background-color: #FE2C55; color: white; }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-
-        #user-profile { display: none; margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border-left: 4px solid #00f2ea; }
-        #console-log { background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 6px; font-family: monospace; margin-top: 20px; height: 150px; overflow-y: auto; display: none; font-size: 13px; }
-        
-        .step { margin-bottom: 20px; }
-        .badge { background: #e1e1e1; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #555; }
-    </style>
+    <title>TikTok Uploader Demo</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-
-<div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1>Crypto Scheduler <span style="font-size:14px; color:#888; font-weight:normal;">v1.0.2</span></h1>
-        <a href="#tos" style="color:#666; text-decoration:none; font-size:12px;">Privacy & Terms</a>
-    </div>
-
-
-    <div class="step" id="step-login">
-        <p>Please authorize with your TikTok account to proceed.</p>
-        <button class="btn btn-tiktok" onclick="mockLogin()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.65-1.62-1.12v8.76c-.52 4.03-3.66 7.28-7.9 7.26-4.61-.02-8.12-4.3-7.14-8.83.79-3.66 4.2-6.11 7.96-5.46v4.09c-2.41-.49-4.72 1.18-5.11 3.56-.45 2.79 1.67 5.41 4.47 5.5 2.27.07 4.27-1.64 4.29-4.01V.02h-.65z"/></svg>
-            Login with TikTok
-        </button>
-    </div>
-
-
-    <div id="user-profile">
-        <div style="display:flex; align-items:center; gap:15px;">
-            <div style="width:50px; height:50px; background:#ddd; border-radius:50%;">
-                <!-- 这是一个灰色的假头像 -->
-                <svg viewBox="0 0 24 24" fill="#999" style="width:100%; height:100%;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-            </div>
-            <div>
-                <h3 style="margin:0;">Yamixiu Demo User</h3>
-                <span class="badge">Connected</span>
-            </div>
+    <div class="container">
+        <h1>TikTok Uploader Demo</h1>
+        
+        <!-- Login Section -->
+        <div id="login-section">
+            <p>Please login to start uploading.</p>
+            <button id="login-btn" class="btn-primary">Login with TikTok</button>
         </div>
-        
-        <hr style="margin: 15px 0; border:0; border-top:1px solid #eee;">
-        
-        <p><strong>Ready to Upload:</strong> <em>bitcoin_analysis_2025.mp4</em></p>
-        <button class="btn btn-upload" id="uploadBtn" onclick="mockUpload()">Publish to TikTok</button>
+
+        <!-- User Info Section (Hidden by default) -->
+        <div id="user-section" class="hidden">
+            <div class="user-profile">
+                <img id="user-avatar" src="" alt="Avatar" />
+                <h2 id="user-nickname"></h2>
+            </div>
+            
+            <hr>
+
+            <!-- Video Selection -->
+            <div class="upload-section">
+                <h3>Select Video</h3>
+                <div class="file-input-wrapper">
+                    <input type="file" id="video-file" accept="video/*">
+                </div>
+                
+                <!-- Internal Library Simulation -->
+                <div class="internal-library">
+                    <h4>Internal Content Library (Simulated)</h4>
+                    <ul id="video-list">
+                        <li><label><input type="radio" name="internal-video" value="vid_001"> Video A (Telegram Source)</label></li>
+                        <li><label><input type="radio" name="internal-video" value="vid_002"> Video B (Telegram Source)</label></li>
+                    </ul>
+                </div>
+
+                <button id="publish-btn" class="btn-success" disabled>Publish to TikTok</button>
+            </div>
+            
+            <div id="status-msg"></div>
+        </div>
     </div>
 
-    <div id="console-log"></div>
-</div>
-
-<script>
-    function mockLogin() {
-        window.open('https://www.tiktok.com/login', 'newwindow', 'width=500,height=600');
-        
-
-        setTimeout(() => {
-            document.getElementById('step-login').style.display = 'none';
-            document.getElementById('user-profile').style.display = 'block';
-        }, 2500); 
-    }
-
-    function mockUpload() {
-        const btn = document.getElementById('uploadBtn');
-        const consoleLog = document.getElementById('console-log');
-        
-        btn.disabled = true;
-        btn.innerText = "Processing...";
-        consoleLog.style.display = 'block';
-        
-
-        const logs = [
-            "Initializing upload session...",
-            "Connecting to local backend service...",
-            "[INFO] Triggering Python script...",
-            "WAITING FOR CLIENT RESPONSE..."
-        ];
-
-        let i = 0;
-        function printLog() {
-            if (i < logs.length) {
-                const p = document.createElement('div');
-                p.innerText = "> " + logs[i];
-                consoleLog.appendChild(p);
-                i++;
-                setTimeout(printLog, 800);
-            }
-        }
-        printLog();
-    }
-</script>
-
+    <script src="assets/script.js"></script>
 </body>
 </html>
