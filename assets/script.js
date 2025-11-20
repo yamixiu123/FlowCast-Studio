@@ -74,15 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             if (data.success) {
-                document.getElementById('status-msg').innerText = 'Publish Successful! (Demo)';
-                document.getElementById('status-msg').style.color = 'green';
+                const statusDiv = document.getElementById('status-msg');
+                statusDiv.innerHTML = `
+                    <div class="bg-green-500/20 border border-green-500/50 text-green-400 px-6 py-3 rounded-xl inline-flex items-center gap-3 animate-fade-in">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="font-bold">Success!</span> Video published to TikTok (Demo)
+                    </div>
+                `;
             } else {
                 throw new Error('Upload failed');
             }
         } catch (error) {
             console.error(error);
-            document.getElementById('status-msg').innerText = 'Publish Failed (Check Backend)';
-            document.getElementById('status-msg').style.color = 'red';
+            const statusDiv = document.getElementById('status-msg');
+            statusDiv.innerHTML = `
+                <div class="bg-red-500/20 border border-red-500/50 text-red-400 px-6 py-3 rounded-xl inline-flex items-center gap-3 animate-fade-in">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-bold">Error:</span> ${error.message || 'Publish Failed'}
+                </div>
+            `;
         } finally {
             publishBtn.disabled = false;
             publishBtn.innerText = 'Publish to TikTok';
