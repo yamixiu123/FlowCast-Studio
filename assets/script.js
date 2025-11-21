@@ -4,7 +4,7 @@ const CLIENT_KEY = 'sbawmt8vfjv5gp2g5d';
 // REPLACE WITH YOUR GITHUB PAGES URL or LOCALHOST
 const REDIRECT_URI = 'https://yamixiu123.github.io/tiktok-uploader-page/auth/callback.html';
 // REPLACE WITH YOUR NGROK/BACKEND URL
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'https://api.innovator-gate.jp';
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('login-btn');
@@ -107,3 +107,4 @@ function showUser(user) {
     document.getElementById('user-avatar').src = user.avatar_url;
     document.getElementById('user-nickname').innerText = user.display_name;
 }
+
