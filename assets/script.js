@@ -2,7 +2,7 @@
 // REPLACE WITH YOUR ACTUAL CLIENT KEY
 const CLIENT_KEY = 'sbawmt8vfjv5gp2g5d';
 // Frontend is on GitHub Pages
-const REDIRECT_URI = 'https://yamixiu123.github.io/FlowCast-Studio/auth/callback.html';
+const REDIRECT_URI = "https://yamixiu123.github.io/FlowCast-Studio/auth/callback.html";
 // Backend is on your custom server
 const BACKEND_URL = 'https://api.innovator-gate.jp';
 
@@ -107,3 +107,4 @@ function showUser(user) {
     document.getElementById('user-avatar').src = user.avatar_url;
     document.getElementById('user-nickname').innerText = user.display_name;
 }
+
